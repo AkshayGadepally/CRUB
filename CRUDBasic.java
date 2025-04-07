@@ -1,8 +1,8 @@
-package practice;
+package crud;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CrubBasic {
+public class CRUDBasic {
 	static Scanner scan = new Scanner(System.in);
 	static ArrayList<Student> list = new ArrayList<>();
 	public static void main (String[] args) {
@@ -109,4 +109,3 @@ public class CrubBasic {
 	  }
 	}
 }
-

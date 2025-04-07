@@ -1,4 +1,4 @@
-package practice;
+package crud;
 
 public class Student {
 	private String name;

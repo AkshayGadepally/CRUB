@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface StudentDAO {
 		// add student info
-		void addStundent(Student student);
+		Boolean addStudent(Student student);
 		
 		// get the roll no
 		Student getStudentbyRollNo(int rollNo);
@@ -17,4 +17,9 @@ public interface StudentDAO {
 		
 		//delete using roll no
 		Boolean deleteUsingRollNo(int RollNo);
+
+		
+
+		
+		
 }

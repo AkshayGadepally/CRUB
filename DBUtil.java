@@ -1,8 +1,8 @@
 package crud;
 
+import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class DBUtil {
 	public static final String URL = "jdbc:postgresql://localhost:5432/studentdb";

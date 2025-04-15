@@ -10,6 +10,11 @@ public class Student {
 		this.rollno = rollno;
 		this.grade = grade;
 	}
+
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return name;
 	}

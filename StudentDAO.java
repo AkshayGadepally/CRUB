@@ -6,11 +6,11 @@ public interface StudentDAO {
 		// add student info
 		Boolean addStudent(Student student);
 		
+		//get all the students
+		List<Student> getAllStudentDetails();
+				
 		// get the roll no
 		Student getStudentbyRollNo(int rollNo);
-		
-		//get all the students
-		List<Student> getStudentDetails();
 		
 		//update the student details
 		Boolean updateStudent(Student student);

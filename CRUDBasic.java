@@ -1,14 +1,16 @@
 package crud;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CRUDBasic {
 	static Scanner scan = new Scanner(System.in);
-	static ArrayList<Student> list = new ArrayList<>();
+	static List<Student> list = new ArrayList<>();
 	public static void main (String[] args) {
 	while(true) {
-			System.out.println("\n 1.Student details \n 2.show all names \n 3.exit \n 4.search \n 5.remove \n 6. update");
-			System.out.println("Please enter your choice");
+			System.out.println("\nPlease select from the below options");
+			System.out.println("\n1.Enter Student details \n2.show all names \n3.exit \n4.search  \n5.remove  \n6.update");
+			System.out.println("\nPlease enter your choice");
 			int choice = scan.nextInt();
 			switch(choice) {
 			case 1:
@@ -46,23 +48,36 @@ public class CRUDBasic {
 		System.out.println("Enter Grade");
 		char grade = scan.next().charAt(0);
 		Student stud = new Student(name,rollno,grade);
-		list.add(stud);
+		
+		
+		StudentDAO dao = new StudentDAOImpl();
+		Boolean isAdded = dao.addStudent(stud);
+		
+		if(isAdded) {
+			System.out.println("The Student data has been added successfully");
+		}
+		else {
+			System.out.println("The Student data has not been added");
+		}
 	}
 
 	private static void showStudents() {
-		// TODO Auto-generated method stub
-		if(list.isEmpty()) {
+		StudentDAO dao = new StudentDAOImpl();
+		List<Student> stud = dao.getAllStudentDetails();
+		if(stud.isEmpty()) {
 			System.out.println("There is nothing in the list");
 		}else {
-			for(Student stud : list) {
-				System.out.println("Name: "+stud.getName()+", Roll No: "+stud.getRollno()+", Grade:"+stud.getGrade());
+			for(Student stu : stud) {
+				System.out.println("Name: "+stu.getName()+", Roll No: "+stu.getRollno()+", Grade:"+stu.getGrade());
 			}
 		}
 	}
 	private static void search() {
 		System.out.println("Enter the rollno");
+		StudentDAO dao = new StudentDAOImpl();
+		List<Student> stude = dao.getAllStudentDetails();
 		int Rollno = scan.nextInt();
-		for(Student stud : list) {
+		for(Student stud : stude) {
 			if(Rollno == stud.getRollno()) {
 				System.out.println("Name: "+stud.getName()+", Roll No: "+stud.getRollno()+", Grade:"+stud.getGrade());
 			}
@@ -78,6 +93,7 @@ public class CRUDBasic {
 		}
 	}
 	private static void update() {
+		
 		System.out.println("Please share the rollno you want to update");
 		int Rollno = scan.nextInt();
 		for(int i = 0; i< list.size(); i++) {

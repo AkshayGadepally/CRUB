@@ -59,7 +59,7 @@ public class StudentDAOImpl implements StudentDAO{
 			PreparedStatement stmt = conn.prepareStatement("SELECT * from students where rollno = ?");
 			stmt.setInt(1,rollNo);
 			ResultSet rs = stmt.executeQuery();
-			if(rollNo != 0) {
+			if(rs.next()) {
 				
 				student .setName(rs.getString("name"));
 				student .setRollno(rs.getInt("rollno"));
@@ -75,8 +75,24 @@ public class StudentDAOImpl implements StudentDAO{
 	
 	@Override
 	public Boolean updateStudent(Student student) {
-		// TODO Auto-generated method stub
-		return null;
+		Boolean isUpdated = false;
+		try {
+			Connection conn = DBUtil.getConnection();
+			PreparedStatement stmt = conn.prepareStatement("UPDATE students SET name = ? , rollno = ? , grade =? WHERE rollno = ?");
+			
+			stmt.setString(1,student.getName());
+			stmt.setInt(2,student.getRollno());
+			stmt.setString(3, String.valueOf(student.getGrade()));
+			stmt.setInt(4, student.getRollno());
+			
+			int rows = stmt.executeUpdate();
+			isUpdated = rows>0;
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return isUpdated;
 	}
 
 	

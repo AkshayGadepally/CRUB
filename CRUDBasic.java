@@ -95,33 +95,54 @@ public class CRUDBasic {
 	private static void update() {
 		
 		System.out.println("Please share the rollno you want to update");
-		int Rollno = scan.nextInt();
-		for(int i = 0; i< list.size(); i++) {
-			if(list.get(i).getRollno() == Rollno) {
-			System.out.println("enter what you would like to update: 1-Name, 2-Rollno, 3-Grade, 4-all fields");
-			int num = scan.nextInt();
-			scan.nextLine();
-			switch(num) {
+		int RollnoToUpdate = scan.nextInt();
+		scan.nextLine();
+		StudentDAO DAO = new StudentDAOImpl();
+		Student student = DAO.getStudentbyRollNo(RollnoToUpdate);
+		if(student.getRollno() == 0) {
+			System.out.println("This is not valid roll no");
+		}
+		System.out.println("enter what you would like to update: 1-Name, 2-Rollno, 3-Grade, 4-all fields");
+		int num = scan.nextInt();
+		scan.nextLine();
+		switch(num) {		
 			case 1:
 				System.out.println("Enter the updated name:");
 				String name = scan.nextLine();
-				list.get(i).setName(name);
+				student.setName(name);
 				break;
 			case 2:
 				System.out.println("Enter the updated rollno:");
 				int rollno = scan.nextInt();
-				list.get(i).setRollno(rollno);
+				student.setRollno(rollno);
 				break;
 			case 3:
 				System.out.println("Enter the updated grade:");
 				char grade = scan.next().charAt(0);
-				list.get(i).setGrade(grade);
+				student.setGrade(grade);
 				break;
 			case 4:
-				addStudent();
+				System.out.println("Enter the updated name:");
+				String nam = scan.nextLine();
+				student.setName(nam);
+				
+				System.out.println("Enter the updated rollno:");
+				int rolno = scan.nextInt();
+				student.setRollno(rolno);
+			
+				System.out.println("Enter the updated grade:");
+				char grad = scan.next().charAt(0);
+				student.setGrade(grad);
 				break;
-			}
+			default:
+				System.out.println("Please select from the given numbers");
+				return;
+		  }
+		Boolean isUpdated = DAO.updateStudent(student);
+		if(isUpdated) {
+			System.out.println("its updated");
+		}else {
+			System.out.println("its not updated");
 		}
-	  }
 	}
 }

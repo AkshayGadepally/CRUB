@@ -27,7 +27,7 @@ public class Student {
 	public void setRollno(int rollno){
 		this.rollno=rollno;
 	}
-	public int getGrade(){
+	public char getGrade(){
 		return grade;
 	}
 	public void setGrade(char grade) {

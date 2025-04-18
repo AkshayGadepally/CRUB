@@ -43,21 +43,27 @@ public class CRUDBasic {
 		scan.nextLine();
 		System.out.println("Enter Name");
 		String name = scan.nextLine();
+		
 		System.out.println("Enter Roll no");
 		int rollno = scan.nextInt();
+		
 		System.out.println("Enter Grade");
 		char grade = scan.next().charAt(0);
-		Student stud = new Student(name,rollno,grade);
 		
+		if(name.isEmpty() || rollno<=0) {
+			System.out.println("Invalid input. Valid inputs for Name/Rollno");
+			return;
+		}
 		
+		Student stud = new Student(name,rollno,grade);	
 		StudentDAO dao = new StudentDAOImpl();
 		Boolean isAdded = dao.addStudent(stud);
 		
 		if(isAdded) {
-			System.out.println("The Student data has been added successfully");
+			System.out.println("✅ Student added successfully");
 		}
 		else {
-			System.out.println("The Student data has not been added");
+			System.out.println("❌ Failed to add student.");
 		}
 	}
 
@@ -81,15 +87,35 @@ public class CRUDBasic {
 			if(Rollno == stud.getRollno()) {
 				System.out.println("Name: "+stud.getName()+", Roll No: "+stud.getRollno()+", Grade:"+stud.getGrade());
 			}
+			else {
+				System.out.println("The given rollno is not valid");
+				break;
+			}
 		}
 	}
 	private static void remove() {
 		System.out.println("Enter the rollno you want to remove");
 		int Rollno = scan.nextInt();
-		for(int i =0; i<list.size(); i++) {
-			if(list.get(i).getRollno() == Rollno) {
-				list.remove(i);
-			}
+		scan.nextLine();
+		if(Rollno == 0) {
+			System.out.println("not a valid roll number");
+		}
+		StudentDAO dao = new StudentDAOImpl();
+		List<Student> studer = dao.getAllStudentDetails();
+		Boolean found = false;
+		for(Student stud : studer) {
+			if(Rollno == stud.getRollno()){
+				Boolean deleted = dao.deleteUsingRollNo(Rollno);
+				if(deleted) {
+					System.out.println("The Student with the Rollno "+Rollno+" is now deleted");   
+					found = true;
+					break;
+				}				
+			}	
+			
+		}	
+		if(!found) {
+			System.out.println("There is no student with the Rollno "+Rollno);
 		}
 	}
 	private static void update() {
@@ -99,8 +125,8 @@ public class CRUDBasic {
 		scan.nextLine();
 		StudentDAO DAO = new StudentDAOImpl();
 		Student student = DAO.getStudentbyRollNo(RollnoToUpdate);
-		if(student.getRollno() == 0) {
-			System.out.println("This is not valid roll no");
+		if(student.getRollno() <= 0) {
+			System.out.println("Invalid Roll number");
 		}
 		System.out.println("enter what you would like to update: 1-Name, 2-Rollno, 3-Grade, 4-all fields");
 		int num = scan.nextInt();
@@ -140,9 +166,9 @@ public class CRUDBasic {
 		  }
 		Boolean isUpdated = DAO.updateStudent(student);
 		if(isUpdated) {
-			System.out.println("its updated");
+			System.out.println("✅ Student details updated successfully.");
 		}else {
-			System.out.println("its not updated");
+			System.out.println("❌ Failed to update student details.");
 		}
 	}
 }

@@ -61,9 +61,9 @@ public class StudentDAOImpl implements StudentDAO{
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
 				
-				student .setName(rs.getString("name"));
-				student .setRollno(rs.getInt("rollno"));
-				student .setGrade(rs.getString("grade").charAt(0));
+				student.setName(rs.getString("name"));
+				student.setRollno(rs.getInt("rollno"));
+				student.setGrade(rs.getString("grade").charAt(0));
 				student.getName();
 			}
 		}
@@ -100,7 +100,17 @@ public class StudentDAOImpl implements StudentDAO{
 	@Override
 	public Boolean deleteUsingRollNo(int RollNo) {
 		// TODO Auto-generated method stub
-		return null;
+		Boolean isUpdated = false;
+		try {
+			Connection conn = DBUtil.getConnection();
+			PreparedStatement stmt = conn.prepareStatement("DELETE FROM students where rollno = ?");
+			stmt.setInt(1, RollNo);
+			int RowsEffected = stmt.executeUpdate();
+			isUpdated = RowsEffected > 0;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return isUpdated;
 	}
 	
 }

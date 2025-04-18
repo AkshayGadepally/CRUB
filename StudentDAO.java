@@ -16,10 +16,5 @@ public interface StudentDAO {
 		Boolean updateStudent(Student student);
 		
 		//delete using roll no
-		Boolean deleteUsingRollNo(int RollNo);
-
-		
-
-		
-		
+		Boolean deleteUsingRollNo(int RollNo);	
 }

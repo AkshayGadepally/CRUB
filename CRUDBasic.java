@@ -1,11 +1,9 @@
 package crud;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CRUDBasic {
 	static Scanner scan = new Scanner(System.in);
-	static List<Student> list = new ArrayList<>();
 	public static void main (String[] args) {
 	while(true) {
 			System.out.println("\nPlease select from the below options");
@@ -56,8 +54,8 @@ public class CRUDBasic {
 		}
 		
 		Student stud = new Student(name,rollno,grade);	
-		StudentDAO dao = new StudentDAOImpl();
-		Boolean isAdded = dao.addStudent(stud);
+		StudentService service = new StudentServiceImpl();
+		Boolean isAdded = service.addStudent(stud);
 		
 		if(isAdded) {
 			System.out.println("✅ Student added successfully");
@@ -68,8 +66,8 @@ public class CRUDBasic {
 	}
 
 	private static void showStudents() {
-		StudentDAO dao = new StudentDAOImpl();
-		List<Student> stud = dao.getAllStudentDetails();
+		StudentService service = new StudentServiceImpl();
+		List<Student> stud = service.getAllStudentDetails();
 		if(stud.isEmpty()) {
 			System.out.println("There is nothing in the list");
 		}else {
@@ -80,8 +78,8 @@ public class CRUDBasic {
 	}
 	private static void search() {
 		System.out.println("Enter the rollno");
-		StudentDAO dao = new StudentDAOImpl();
-		List<Student> stude = dao.getAllStudentDetails();
+		StudentService service = new StudentServiceImpl();
+		List<Student> stude = service.getAllStudentDetails();
 		int Rollno = scan.nextInt();
 		for(Student stud : stude) {
 			if(Rollno == stud.getRollno()) {
@@ -100,12 +98,12 @@ public class CRUDBasic {
 		if(Rollno == 0) {
 			System.out.println("not a valid roll number");
 		}
-		StudentDAO dao = new StudentDAOImpl();
-		List<Student> studer = dao.getAllStudentDetails();
+		StudentService service = new StudentServiceImpl();
+		List<Student> studer = service.getAllStudentDetails();
 		Boolean found = false;
 		for(Student stud : studer) {
 			if(Rollno == stud.getRollno()){
-				Boolean deleted = dao.deleteUsingRollNo(Rollno);
+				Boolean deleted = service.deleteUsingRollNo(Rollno);
 				if(deleted) {
 					System.out.println("The Student with the Rollno "+Rollno+" is now deleted");   
 					found = true;
@@ -123,8 +121,8 @@ public class CRUDBasic {
 		System.out.println("Please share the rollno you want to update");
 		int RollnoToUpdate = scan.nextInt();
 		scan.nextLine();
-		StudentDAO DAO = new StudentDAOImpl();
-		Student student = DAO.getStudentbyRollNo(RollnoToUpdate);
+		StudentService service = new StudentServiceImpl();
+		Student student = service.getStudentbyRollNo(RollnoToUpdate);
 		if(student.getRollno() <= 0) {
 			System.out.println("Invalid Roll number");
 		}
@@ -164,7 +162,7 @@ public class CRUDBasic {
 				System.out.println("Please select from the given numbers");
 				return;
 		  }
-		Boolean isUpdated = DAO.updateStudent(student);
+		Boolean isUpdated = service.updateStudent(student);
 		if(isUpdated) {
 			System.out.println("✅ Student details updated successfully.");
 		}else {
